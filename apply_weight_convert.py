@@ -16,7 +16,7 @@ from lite_llama.executor.weight_convert import (
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning, module="torch._utils")
 
-checkpoints_dir = "/path/llm_weights/llava-v1.5-7b"
+checkpoints_dir = "/workspace/lite_llama/checkpoints/Llama-3.2-1B-Instruct"
 
 if "llava" in checkpoints_dir.lower():
     model = (
