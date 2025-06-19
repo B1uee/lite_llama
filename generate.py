@@ -1,11 +1,10 @@
 import torch
-import warnings
 from typing import Optional
 warnings.filterwarnings("ignore", category=UserWarning, module="torch._utils")
 from lite_llama.utils.common import get_gpu_memory, detect_device, count_tokens, get_model_type
 from lite_llama.utils.prompt_templates import get_prompter
 from lite_llama.generate_stream import GenerateStreamText  # 导入 GenerateText 类
-
+import warnings
 
 import sys, os, time
 from pathlib import Path
