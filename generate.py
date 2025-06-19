@@ -1,10 +1,11 @@
 import torch
 from typing import Optional
+import warnings
 warnings.filterwarnings("ignore", category=UserWarning, module="torch._utils")
 from lite_llama.utils.common import get_gpu_memory, detect_device, count_tokens, get_model_type
 from lite_llama.utils.prompt_templates import get_prompter
 from lite_llama.generate_stream import GenerateStreamText  # 导入 GenerateText 类
-import warnings
+
 
 import sys, os, time
 from pathlib import Path
@@ -46,7 +47,7 @@ def main(
     compiled_model: bool = False,
     triton_weight: bool = True,
     gpu_type: str = "nvidia",
-    checkpoint_path: Path = Path("checkpoints/lit-llama/7B/"),
+    checkpoint_path: Path = Path("checkpoints/Llama-3.2-1B-Instruct"),
     quantize: Optional[str] = None,
 ):
     device = "cuda" if torch.cuda.is_available() else "cpu"
@@ -73,9 +74,9 @@ def main(
         tokenizer_path=checkpoint_path,
         max_gpu_num_blocks=max_gpu_num_blocks,
         max_seq_len=max_seq_len,
-        load_model=load_model,
+        #load_model=load_model,
         compiled_model=compiled_model,
-        triton_weight=triton_weight,
+        #triton_weight=triton_weight,
         device=device,
     )
 

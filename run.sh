@@ -1,0 +1,1 @@
+python generate.py --prompt "What is large language model" --checkpoint_path my_weight/Llama-3.2-1B-Instruct
