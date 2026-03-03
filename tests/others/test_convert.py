@@ -7,7 +7,8 @@ from pathlib import Path
 from types import SimpleNamespace
 import pytest
 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..")))
+# Ensure project root is importable regardless of how pytest is invoked.
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "..")))
 from apply_weight_convert import convert
 
 
@@ -98,7 +99,7 @@ def test_qwen_kv_merge(tmp_ckpt_dir):
     new_sd = convert(ckpt_dir, sd, model_type, num_layers)
 
     # KV fused weight 应出现
-    kv_key = "layers.0.self_attn.kv_proj.weight"
+    kv_key = "layers.0.self_attn.kv_proj_weight"
     assert kv_key in new_sd
 
     # 原 K、V 不应保留
@@ -120,7 +121,7 @@ def test_llama_no_kv_merge(tmp_ckpt_dir):
     new_sd = convert(ckpt_dir, sd, model_type, num_layers)
 
     # KV fused 不存在
-    assert "layers.0.self_attn.kv_proj.weight" not in new_sd
+    assert "layers.0.self_attn.kv_proj_weight" not in new_sd
     # 原 K/V 仍然存在
     assert "layers.0.self_attn.k_proj.weight" in new_sd
     assert "layers.0.self_attn.v_proj.weight" in new_sd

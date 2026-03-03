@@ -1,12 +1,14 @@
 import torch
 from typing import Optional
+from pathlib import Path
 from lite_llama.utils.prompt_templates import get_prompter
 from lite_llama.generate_stream import GenerateStreamText  # 导入 GenerateText 类
 
 import warnings
 warnings.filterwarnings("ignore", category=UserWarning, module="torch._utils")
 
-checkpoints_dir = "/home/honggao/lite_llama/my_weight/Qwen3-1.7B"
+# Default to converted local checkpoint under this repository.
+checkpoints_dir = str(Path(__file__).resolve().parent / "my_weight" / "Qwen3-1.7B")
 
 def main(
     temperature: float = 0.6,
@@ -17,6 +19,11 @@ def main(
     compiled_model: bool = False,
 ):
     device = "cuda" if torch.cuda.is_available() else "cpu"
+    if not Path(checkpoints_dir).is_dir():
+        raise FileNotFoundError(
+            f"checkpoint_path not found: {checkpoints_dir}. "
+            "Please run apply_weight_convert.py first or update checkpoints_dir in cli.py."
+        )
     if max_seq_len <= 1024:
         short_prompt = True
     else:

@@ -10,6 +10,7 @@ images/tmp
 test/tmp
 test/debug
 my_weight
+checkpoints
 .idea
 logs
 lite_llama/logs
